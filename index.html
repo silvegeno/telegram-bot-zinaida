@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Зинаида — трекер задач в Telegram</title>
+<style>
+  :root { --bg: #1a1a2e; --card: #16213e; --accent: #e94560; --text: #eee; --muted: #8892b0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  .hero { text-align: center; padding: 80px 20px 60px; }
+  .hero .logo { margin-bottom: 20px; }
+  .hero .logo svg { width: 100px; height: 100px; }
+  .hero h1 { font-size: 3em; margin-bottom: 10px; }
+  .hero .tagline { color: var(--accent); font-size: 1.3em; margin-bottom: 30px; }
+  .hero .desc { color: var(--muted); max-width: 600px; margin: 0 auto 30px; font-size: 1.1em; }
+  .btn { display: inline-block; background: var(--accent); color: #fff; padding: 14px 36px; border-radius: 8px; text-decoration: none; font-size: 1.1em; font-weight: 600; transition: background .2s; }
+  .btn:hover { background: #c2334d; }
+  section { max-width: 900px; margin: 0 auto 60px; padding: 0 20px; }
+  section h2 { font-size: 1.8em; margin-bottom: 24px; color: var(--accent); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+  .card { background: var(--card); border-radius: 12px; padding: 24px; }
+  .card h3 { margin-bottom: 8px; font-size: 1.15em; }
+  .card p { color: var(--muted); font-size: .95em; }
+  .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .lv { background: var(--card); border-radius: 10px; padding: 16px; text-align: center; }
+  .lv .num { font-size: 2em; font-weight: 700; color: var(--accent); }
+  .lv .range { color: var(--muted); font-size: .85em; margin-top: 4px; }
+  .cmds { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .cmd { background: var(--card); border-radius: 8px; padding: 14px 18px; display: flex; gap: 14px; align-items: flex-start; }
+  .cmd code { color: var(--accent); font-size: 1em; white-space: nowrap; }
+  .cmd .info { color: var(--muted); font-size: .9em; }
+  .features { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .features li { background: var(--card); border-radius: 8px; padding: 14px 18px; display: flex; align-items: center; gap: 10px; }
+  .features .icon { font-size: 1.3em; }
+  footer { text-align: center; color: var(--muted); padding: 40px 20px; font-size: .85em; border-top: 1px solid #243359; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#1a1a2e"/>
+          <stop offset="100%" stop-color="#16213e"/>
+        </linearGradient>
+      </defs>
+      <circle cx="100" cy="100" r="98" fill="url(#bgGrad)" stroke="#243359" stroke-width="2"/>
+      <rect x="52" y="38" width="96" height="124" rx="8" fill="#1e2a4a" stroke="#d4a843" stroke-width="2"/>
+      <rect x="52" y="28" width="96" height="18" rx="4" fill="#2a3a5c" stroke="#d4a843" stroke-width="1.5"/>
+      <circle cx="100" cy="37" r="6" fill="#1a1a2e" stroke="#d4a843" stroke-width="1.5"/>
+      <line x1="68" y1="60" x2="132" y2="60" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+      <line x1="68" y1="75" x2="120" y2="75" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+      <line x1="68" y1="90" x2="125" y2="90" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+      <g transform="translate(70, 105)">
+        <rect x="0" y="0" width="60" height="44" rx="6" fill="#e94560" opacity="0.15"/>
+        <polyline points="12,22 26,36 52,10" fill="none" stroke="#e94560" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  </div>
+  <h1>Зинаида</h1>
+  <p class="tagline">Строгая, но добрая секретарша в вашем Telegram</p>
+  <p class="desc">Трекер задач с ироничными комментариями и геймификацией. Зинаида ведёт вашу картотеку дел, напоминает о дедлайнах и хвалит за продуктивность — умеренно.</p>
+  <a class="btn" href="https://t.me/zinaida_task_bot" target="_blank">Открыть в Telegram</a>
+</div>
+
+<section>
+  <h2>Возможности</h2>
+  <ul class="features">
+    <li><span class="icon">📝</span> Разовые задачи с дедлайном</li>
+    <li><span class="icon">🔁</span> Регулярные: каждый день, раз в неделю, раз в N дней</li>
+    <li><span class="icon">✅</span> Отметка выполнения — очки в копилку</li>
+    <li><span class="icon">⏰</span> Напоминание за час до дедлайна</li>
+    <li><span class="icon">📋</span> Ежедневная сводка регулярных заданий в 10:00</li>
+    <li><span class="icon">🤖</span> AI-комментарии от Зинаиды</li>
+    <li><span class="icon">🔒</span> Доступ только для владельца</li>
+    <li><span class="icon">📊</span> Профиль, очки, уровни</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Система уровней</h2>
+  <div class="levels">
+    <div class="lv"><div class="num">1</div><div class="range">0–49 очков</div></div>
+    <div class="lv"><div class="num">2</div><div class="range">50–99</div></div>
+    <div class="lv"><div class="num">3</div><div class="range">100–199</div></div>
+    <div class="lv"><div class="num">4</div><div class="range">200+</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Команды</h2>
+  <div class="cmds">
+    <div class="cmd"><code>/start</code><span class="info">Запуск и приветствие от Зинаиды</span></div>
+    <div class="cmd"><code>/menu</code><span class="info">Главное меню с кнопками</span></div>
+    <div class="cmd"><code>/add</code><span class="info">Добавить разовую задачу</span></div>
+    <div class="cmd"><code>/add_regular</code><span class="info">Добавить повторяющуюся задачу</span></div>
+    <div class="cmd"><code>/tasks</code><span class="info">Список активных задач + кнопки</span></div>
+    <div class="cmd"><code>/regular</code><span class="info">Регулярные задания</span></div>
+    <div class="cmd"><code>/profile</code><span class="info">Очки, выполнено задач, уровень</span></div>
+    <div class="cmd"><code>/help</code><span class="info">Справка по командам</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Как устроена</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>🐍 Python 3.14</h3>
+      <p>aiogram 3 для Telegram API, APScheduler для напоминаний, CSV вместо базы данных.</p>
+    </div>
+    <div class="card">
+      <h3>🧠 AI-комментарии</h3>
+      <p>Зинаида подключается к нейросети через VseLLM API и комментирует ваши успехи (и не только).</p>
+    </div>
+    <div class="card">
+      <h3>💾 CSV-хранилище</h3>
+      <p>Никаких баз данных — tasks.csv, recurring_tasks.csv и profile.csv. Просто, надёжно, как картотека.</p>
+    </div>
+    <div class="card">
+      <h3>📡 VPS-ready</h3>
+      <p>Готов к деплою на любой VPS через screen или systemd. Зависимости — четыре пакета.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Зинаида не забывает. Зинаида всегда рядом.
+</footer>
+
+</body>
+</html>

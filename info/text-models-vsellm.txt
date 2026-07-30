@@ -1,0 +1,43 @@
+Документация - https://vsellm.ru/docs#models-text
+Текстовые модели VseLLM
+Используются для работы с текстом: генерация, анализ, классификация, суммаризация и другие задачи.
+POST
+/v1/chat/completions
+Параметры запроса
+
+temperature - Контроль креативности (число, автоматически форсируется на 1.0 при включённом thinking)
+top_p - Ядерная выборка (число)
+max_tokens - Лимит токенов (целое число, по умолчанию: 4096 если не задано)
+stop - Стоп-слова (строка или массив, маппится на stop_sequences)
+stream - Потоковый режим (булево)
+tools - Массив инструментов (полная конверсия, включая функцию и custom)
+tool_choice - Выбор инструмента (маппится в режим Anthropic)
+reasoning_effort  - Усилие рассуждения (маппится на thinking.budget_tokens: "minimal"→1000, "low"→5000, "medium"→15000, "high"→30000, "none"→отключено)
+
+Дополнительные параметры (extra_body)
+Эти параметры можно передать в поле extra_body вашего запроса для расширенного контроля:
+top_k - число (Top-K семплирование)
+thinking - объект {type: "enabled"|"disabled"}
+
+Известные проблемы и ограничения
+temperature принудительно ставится на 1.0 при включённом thinking
+max_tokens устанавливается на 4096, если не задан
+Отсутствует режим JSON или JSON Schema
+
+Пример кода:
+
+import openai
+
+client = openai.OpenAI(
+    api_key="your-api-key",
+    base_url="https://api.vsellm.ru/v1"
+)
+
+response = client.chat.completions.create(
+    model="anthropic/claude-fable-5",
+    messages=[
+        {"role": "user", "content": "Привет!"}
+    ]
+)
+
+print(response.choices[0].message.content)

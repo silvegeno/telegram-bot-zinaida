@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Брендбук — Зинаида</title>
+<style>
+  :root { --bg: #0f0f23; --card: #1a1a35; --border: #243359; --accent: #e94560; --gold: #d4a843; --text: #e8e8f0; --muted: #8892b0; --success: #2ecc71; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.65; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero { text-align: center; padding: 80px 20px 60px; border-bottom: 1px solid var(--border); }
+  .hero .logo { margin-bottom: 24px; }
+  .hero .logo svg { width: 120px; height: 120px; }
+  .hero h1 { font-size: 2.8em; margin-bottom: 6px; letter-spacing: -0.02em; }
+  .hero .sub { color: var(--muted); font-size: 1.15em; }
+
+  /* Sections */
+  section { padding: 64px 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  section h2 { font-size: 1.6em; color: var(--accent); margin-bottom: 28px; letter-spacing: -0.01em; }
+
+  /* Logo section */
+  .logo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+  .logo-display { display: flex; align-items: center; justify-content: center; }
+  .logo-large svg { width: 200px; height: 200px; }
+  .logo-small svg { width: 80px; height: 80px; }
+  .logo-context { display: flex; flex-direction: column; gap: 16px; }
+  .logo-box { background: var(--card); border-radius: 16px; padding: 32px; }
+  .logo-box h3 { font-size: 0.9em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+  .logo-variants { display: flex; gap: 24px; align-items: center; }
+
+  /* Color palette */
+  .colors { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; }
+  .swatch { border-radius: 12px; overflow: hidden; }
+  .swatch .chip { height: 80px; }
+  .swatch .info { background: var(--card); padding: 12px 14px; }
+  .swatch .info .name { font-weight: 600; font-size: 0.9em; }
+  .swatch .info .hex { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.8em; color: var(--muted); margin-top: 2px; }
+  .swatch .info .role { font-size: 0.75em; color: var(--muted); margin-top: 4px; }
+
+  /* Typography */
+  .type-sample { background: var(--card); border-radius: 12px; padding: 28px; margin-bottom: 16px; }
+  .type-sample .label { font-size: 0.75em; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .type-sample .specimen { font-size: 2em; font-weight: 700; margin-bottom: 4px; }
+  .type-sample .specimen.light { font-weight: 400; }
+  .type-sample .specimen.mono { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 1.2em; }
+  .type-sample .note { color: var(--muted); font-size: 0.85em; }
+
+  /* Components */
+  .comp-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+  .comp { background: var(--card); border-radius: 12px; padding: 20px; }
+  .comp .comp-label { font-size: 0.75em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+
+  /* Button demo */
+  .btn-demo { display: inline-block; background: var(--accent); color: #fff; padding: 12px 28px; border-radius: 8px; font-weight: 600; font-size: 0.95em; text-decoration: none; }
+  .btn-demo.secondary { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); }
+  .btn-demo.ghost { background: transparent; color: var(--muted); border: 1.5px solid var(--border); }
+
+  /* Card demo */
+  .card-demo { background: var(--card); border-radius: 12px; padding: 20px; border: 1px solid var(--border); }
+  .card-demo .card-title { font-weight: 600; margin-bottom: 6px; }
+  .card-demo .card-body { color: var(--muted); font-size: 0.9em; }
+
+  /* Badge */
+  .badge-demo { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; }
+  .badge-accent { background: var(--accent); color: #fff; }
+  .badge-gold { background: var(--gold); color: #1a1a2e; }
+  .badge-muted { background: var(--border); color: var(--muted); }
+
+  /* Level indicators */
+  .lv-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .lv-badge { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 18px; text-align: center; min-width: 80px; }
+  .lv-badge .lv-num { font-size: 1.5em; font-weight: 700; color: var(--accent); }
+  .lv-badge .lv-range { font-size: 0.75em; color: var(--muted); }
+
+  /* Voice & tone */
+  .voice-card { background: var(--card); border-radius: 12px; padding: 20px; border-left: 3px solid var(--accent); margin-bottom: 12px; }
+  .voice-card h4 { margin-bottom: 6px; font-size: 1em; }
+  .voice-card p { color: var(--muted); font-size: 0.9em; }
+
+  /* Footer */
+  footer { text-align: center; padding: 40px; color: var(--muted); font-size: 0.85em; }
+
+  @media (max-width: 640px) {
+    .logo-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 2em; }
+    section { padding: 48px 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>📋 Зинаида</h1>
+  <p class="sub">Брендбук — визуальный стиль и голос проекта</p>
+</div>
+
+<div class="container">
+
+  <!-- LOGO -->
+  <section>
+    <h2>Логотип</h2>
+    <div class="logo-grid">
+      <div class="logo-display logo-large">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <!-- Background circle -->
+          <defs>
+            <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#1a1a2e"/>
+              <stop offset="100%" stop-color="#16213e"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="98" fill="url(#bgGrad)" stroke="#243359" stroke-width="2"/>
+          
+          <!-- Clipboard body -->
+          <rect x="52" y="38" width="96" height="124" rx="8" fill="#1e2a4a" stroke="#d4a843" stroke-width="2"/>
+          <!-- Clipboard top clip -->
+          <rect x="52" y="28" width="96" height="18" rx="4" fill="#2a3a5c" stroke="#d4a843" stroke-width="1.5"/>
+          <!-- Clip circle -->
+          <circle cx="100" cy="37" r="6" fill="#1a1a2e" stroke="#d4a843" stroke-width="1.5"/>
+          
+          <!-- Lines on clipboard -->
+          <line x1="68" y1="60" x2="132" y2="60" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+          <line x1="68" y1="75" x2="120" y2="75" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+          <line x1="68" y1="90" x2="125" y2="90" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+          
+          <!-- Red checkmark -->
+          <g transform="translate(70, 105)">
+            <rect x="0" y="0" width="60" height="44" rx="6" fill="#e94560" opacity="0.15"/>
+            <polyline points="12,22 26,36 52,10"
+                     fill="none" stroke="#e94560" stroke-width="6"
+                     stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </svg>
+      </div>
+      <div class="logo-context">
+        <div class="logo-box">
+          <h3>Варианты</h3>
+          <div class="logo-variants">
+            <div class="logo-small">
+              <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="98" fill="#1a1a2e" stroke="#243359" stroke-width="2"/>
+                <rect x="52" y="38" width="96" height="124" rx="8" fill="#1e2a4a" stroke="#d4a843" stroke-width="2"/>
+                <rect x="52" y="28" width="96" height="18" rx="4" fill="#2a3a5c" stroke="#d4a843" stroke-width="1.5"/>
+                <circle cx="100" cy="37" r="6" fill="#1a1a2e" stroke="#d4a843" stroke-width="1.5"/>
+                <line x1="68" y1="60" x2="132" y2="60" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+                <line x1="68" y1="75" x2="120" y2="75" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+                <line x1="68" y1="90" x2="125" y2="90" stroke="#334466" stroke-width="3" stroke-linecap="round"/>
+                <polyline points="82,127 96,141 122,115" fill="none" stroke="#e94560" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div><span class="badge-demo badge-muted">Иконка профиля</span></div>
+          </div>
+        </div>
+        <p style="color:var(--muted); font-size:0.9em;">
+          <strong>Планшет</strong> — символ учёта и картотеки.<br>
+          <strong>Галочка</strong> — выполнение и прогресс.<br>
+          <strong>Золотой контур</strong> — строгость и качество.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COLORS -->
+  <section>
+    <h2>Цвета</h2>
+    <div class="colors">
+      <div class="swatch">
+        <div class="chip" style="background:#e94560"></div>
+        <div class="info"><div class="name">Акцент</div><div class="hex">#e94560</div><div class="role">Заголовки, кнопки, действия</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#d4a843"></div>
+        <div class="info"><div class="name">Золото</div><div class="hex">#d4a843</div><div class="role">Обводка, акценты качества</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#1a1a2e"></div>
+        <div class="info"><div class="name">Фон</div><div class="hex">#1a1a2e</div><div class="role">Основной фон страницы</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#16213e"></div>
+        <div class="info"><div class="name">Карточки</div><div class="hex">#16213e</div><div class="role">Фон карточек и панелей</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#243359"></div>
+        <div class="info"><div class="name">Границы</div><div class="hex">#243359</div><div class="role">Разделители, обводка</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#e8e8f0"></div>
+        <div class="info"><div class="name">Текст</div><div class="hex">#e8e8f0</div><div class="role">Основной текст</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#8892b0"></div>
+        <div class="info"><div class="name">Приглушённый</div><div class="hex">#8892b0</div><div class="role">Второстепенный текст, подписи</div></div>
+      </div>
+      <div class="swatch">
+        <div class="chip" style="background:#2ecc71"></div>
+        <div class="info"><div class="name">Успех</div><div class="hex">#2ecc71</div><div class="role">Подтверждения, зелёная галочка</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TYPOGRAPHY -->
+  <section>
+    <h2>Типографика</h2>
+    <div class="type-sample">
+      <div class="label">Заголовки / Основной</div>
+      <div class="specimen">Зинаида — трекер задач</div>
+      <div class="note">Системный sans-serif, 700 weight, letter-spacing: -0.02em</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Основной текст</div>
+      <div class="specimen light">Строгая, но добрая секретарша в вашем Telegram</div>
+      <div class="note">Системный sans-serif, 400 weight, line-height: 1.65</div>
+    </div>
+    <div class="type-sample">
+      <div class="label">Код / Техническое</div>
+      <div class="specimen mono">/start  /add  /profile  BOT_TOKEN</div>
+      <div class="note">Моноширинный: SF Mono, Fira Code, Consolas</div>
+    </div>
+  </section>
+
+  <!-- COMPONENTS -->
+  <section>
+    <h2>Компоненты интерфейса</h2>
+    <div class="comp-row">
+      <div class="comp">
+        <div class="comp-label">Кнопки — Telegram Web App</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <span class="btn-demo">Открыть в Telegram</span>
+          <span class="btn-demo secondary">Отменить</span>
+          <span class="btn-demo ghost">Назад</span>
+        </div>
+      </div>
+      <div class="comp">
+        <div class="comp-label">Карточка</div>
+        <div class="card-demo">
+          <div class="card-title">📝 Подготовить презентацию</div>
+          <div class="card-body">До 30.07.2026, 18:00 · Награда: 10 очков</div>
+        </div>
+      </div>
+      <div class="comp">
+        <div class="comp-label">Бейджи</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span class="badge-demo badge-accent">Активно</span>
+          <span class="badge-demo badge-gold">+10 очков</span>
+          <span class="badge-demo badge-muted">Выполнено</span>
+        </div>
+      </div>
+      <div class="comp">
+        <div class="comp-label">Уровни</div>
+        <div class="lv-row">
+          <div class="lv-badge"><div class="lv-num">1</div><div class="lv-range">0–49</div></div>
+          <div class="lv-badge"><div class="lv-num">2</div><div class="lv-range">50–99</div></div>
+          <div class="lv-badge"><div class="lv-num">3</div><div class="lv-range">100–199</div></div>
+          <div class="lv-badge"><div class="lv-num">4</div><div class="lv-range">200+</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICE & TONE -->
+  <section>
+    <h2>Голос бренда</h2>
+    <p style="color:var(--muted); margin-bottom:24px;">Зинаида — строгая, но добрая женщина в возрасте. Говорит коротко, с тёплой иронией, никогда не оскорбляет.</p>
+    <div class="voice-card">
+      <h4>✅ Можно</h4>
+      <p>«Ещё одна задача побеждена бюрократическим методом.»<br>
+      «Задача записана. Удивительно, как планирование иногда предшествует действию.»</p>
+    </div>
+    <div class="voice-card" style="border-left-color: var(--muted);">
+      <h4>❌ Нельзя</h4>
+      <p>Оскорбления, грубость, давление, насмешки над личными качествами.<br>
+      «Опять всё провалил» — нет. «Ты безнадёжен» — нет.</p>
+    </div>
+    <div class="voice-card" style="border-left-color: var(--gold);">
+      <h4>💬 Характер</h4>
+      <p>Ирония — тёплая, как у старого друга. Доброжелательность — всегда.<br>
+      Строгость — по делу, без перехода на личности.</p>
+    </div>
+  </section>
+
+  <!-- CSS TOKENS -->
+  <section>
+    <h2>CSS-токены</h2>
+    <div class="type-sample mono">
+      <div style="color:var(--accent)">--accent: #e94560;</div>
+      <div style="color:var(--gold)">--gold: #d4a843;</div>
+      <div style="color:var(--muted)">--bg: #1a1a2e;</div>
+      <div style="color:var(--muted)">--card: #16213e;</div>
+      <div style="color:var(--muted)">--border: #243359;</div>
+      <div style="color:var(--text)">--text: #e8e8f0;</div>
+      <div style="color:var(--muted)">--muted: #8892b0;</div>
+      <div style="color:var(--success)">--success: #2ecc71;</div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Зинаида не забывает. Зинаида всегда рядом.
+</footer>
+
+</body>
+</html>

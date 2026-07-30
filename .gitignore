@@ -1,0 +1,9 @@
+# .gitignore
+venv/
+.env
+__pycache__/
+*.pyc
+*.pyo
+tasks.csv
+recurring_tasks.csv
+profile.csv
