@@ -6,7 +6,7 @@ import datetime
 from collections.abc import Sequence
 from typing import Any
 
-from config import TASKS_CSV, RECURRING_CSV, PROFILE_CSV
+from config import TASKS_CSV, RECURRING_CSV, PROFILE_CSV, TZ
 
 # ─── поля CSV ────────────────────────────────────────────────
 TASK_FIELDS = ["id", "title", "deadline", "status", "created_at",
@@ -108,7 +108,7 @@ def cancel_task(task_id: int) -> dict[str, str] | None:
 
 def get_tasks_needing_reminder() -> list[dict[str, str]]:
     """Задачи, у которых дедлайн < 1 час и reminder_sent == 0."""
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(TZ)
     threshold = now + datetime.timedelta(hours=1)
     tasks: list[dict[str, str]] = []
     rows = _read_all(TASKS_CSV, TASK_FIELDS)

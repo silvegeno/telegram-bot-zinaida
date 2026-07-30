@@ -3,7 +3,7 @@
 import datetime
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-from config import OWNER_ID
+from config import OWNER_ID, TZ, TZ_OFFSET_HOURS
 from csv_storage import (
     get_tasks_needing_reminder,
     mark_reminder_sent,
@@ -12,7 +12,7 @@ from csv_storage import (
 from phrases import random_phrase
 import ai_comments
 
-scheduler = AsyncIOScheduler()
+scheduler = AsyncIOScheduler(timezone=TZ)
 
 
 async def _send_to_bot(bot, text: str) -> None:
@@ -75,4 +75,5 @@ def start_scheduler(bot):
         replace_existing=True,
     )
     scheduler.start()
-    print("[Scheduler] Запущен (интервал 1 мин + ежедневно в 10:00)")
+    tz_name = f"UTC+{TZ_OFFSET_HOURS}" if TZ_OFFSET_HOURS >= 0 else f"UTC{TZ_OFFSET_HOURS}"
+    print(f"[Scheduler] Запущен (интервал 1 мин + ежедневно в 10:00 {tz_name})")

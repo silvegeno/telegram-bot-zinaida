@@ -4,6 +4,7 @@
 import sys
 import os
 import asyncio
+import calendar
 import datetime
 
 from aiogram import Bot, Dispatcher, F
@@ -153,15 +154,56 @@ async def add_task_date_cancel(message: Message, state: FSMContext):
 @dp.message(AddTask.waiting_date)
 async def add_task_date(message: Message, state: FSMContext):
     raw = message.text.strip()
+    today = datetime.date.today()
+
+    # Полная дата: 30.07.2026
     try:
         dt = datetime.datetime.strptime(raw, "%d.%m.%Y")
     except ValueError:
-        await message.answer("Не удалось распознать дату. Используйте формат 30.07.2026.")
+        # Только число: 30
+        try:
+            day = int(raw)
+        except ValueError:
+            await message.answer(
+                "Не удалось распознать дату. Введите число (например, 30) "
+                "или полную дату в формате 30.07.2026.",
+            )
+            return
+
+        if day < 1 or day > 31:
+            await message.answer("Введите число от 1 до 31.")
+            return
+
+        # Ищем подходящий месяц: текущий или следующий
+        _, days_cur = calendar.monthrange(today.year, today.month)
+        if day >= today.day and day <= days_cur:
+            dt = datetime.datetime(today.year, today.month, day)
+        else:
+            next_m = today.month + 1 if today.month < 12 else 1
+            next_y = today.year if today.month < 12 else today.year + 1
+            _, days_next = calendar.monthrange(next_y, next_m)
+            if day > days_next:
+                await message.answer(
+                    f"Число {day} не существует в ближайших месяцах. Введите другую дату."
+                )
+                return
+            dt = datetime.datetime(next_y, next_m, day)
+
+    # Не более 30 дней вперёд
+    diff = (dt.date() - today).days
+    if diff < 0:
+        await message.answer("Эта дата уже прошла. Введите будущую дату.")
         return
+    if diff > 30:
+        await message.answer(
+            "Планирование не более чем на 30 дней. Введите дату поближе."
+        )
+        return
+
     await state.update_data(deadline_date=dt.strftime("%Y-%m-%d"))
     await state.set_state(AddTask.waiting_time)
     await message.answer(
-        "Во сколько напомнить? Введите в формате 18:00.",
+        f"Дата: {dt.strftime('%d.%m.%Y')}. Во сколько напомнить? Введите в формате 10.00.",
         reply_markup=cancel_kb(),
     )
 
@@ -173,10 +215,12 @@ async def add_task_time_cancel(message: Message, state: FSMContext):
 @dp.message(AddTask.waiting_time)
 async def add_task_time(message: Message, state: FSMContext):
     raw = message.text.strip()
+    # Принимаем и двоеточие (10:00) и точку (10.00)
+    raw_clean = raw.replace(".", ":")
     try:
-        tm = datetime.datetime.strptime(raw, "%H:%M")
+        tm = datetime.datetime.strptime(raw_clean, "%H:%M")
     except ValueError:
-        await message.answer("Не удалось распознать время. Используйте формат 18:00.")
+        await message.answer("Не удалось распознать время. Используйте формат 10.00 или 10:00.")
         return
     data = await state.get_data()
     deadline = f"{data['deadline_date']} {tm.strftime('%H:%M')}"

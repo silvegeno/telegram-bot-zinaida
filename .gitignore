@@ -7,3 +7,4 @@ __pycache__/
 tasks.csv
 recurring_tasks.csv
 profile.csv
+info/
