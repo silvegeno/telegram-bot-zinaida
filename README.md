@@ -1,140 +1,129 @@
-# Telegram-бот «Ироничная секретарша»
+# 📋 Зинаида — Telegram-бот трекер задач
 
-Трекер задач с геймификацией для Telegram. Бот помогает добавлять задачи, отмечать выполнение, получать очки и уровни — всё с ироничными комментариями виртуальной секретарши.
+[![Python](https://img.shields.io/badge/Python-3.12+-blue)](https://python.org)
+[![aiogram](https://img.shields.io/badge/aiogram-3.x-orange)](https://aiogram.dev)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-## Возможности
+**Зинаида** — строгая, но добрая виртуальная секретарша в вашем Telegram. Помогает вести список задач, напоминает о дедлайнах, начисляет очки за выполненные дела и комментирует вашу продуктивность с тёплой иронией.
 
-- 📝 Добавление разовых задач с дедлайном
-- 🔁 Регулярные задания: каждый день, раз в неделю, раз в N дней
-- ✅ Отметка выполнения с начислением очков
-- 📊 Система уровней (1–4) в зависимости от набранных очков
-- ⏰ Напоминание за час до дедлайна
-- 📋 Ежедневная рассылка регулярных заданий в 10:00
-- 🤖 Ироничные комментарии через ИИ (VseLLM API)
-- 🔒 Доступ только для владельца (по Telegram ID)
+<p align="center">
+  <img src="logo.png" alt="Зинаида" width="180">
+</p>
 
-## Требования
+---
 
-- Python 3.12 или новее
-- Telegram-токен от [BotFather](https://t.me/BotFather)
+## Что умеет
 
-## Установка
+| 📝 Разовые задачи | 🔁 Регулярные задания | ⏰ Напоминания |
+|---|---|---|
+| Дедлайн, название, очки | Каждый день / неделю / N дней | За час до дедлайна |
+| Inline-кнопки ✅ ❌ | Защита от повторов | Ежедневная сводка в 10:00 |
 
-### 1. Клонирование / копирование проекта
+| 📊 Геймификация | 🤖 AI-комментарии | 🔒 Доступ |
+|---|---|---|
+| Очки + 4 уровня | Через VseLLM API | Только владелец |
+| Повышение с поздравлением | Fallback на встроенные фразы | Проверка по Telegram ID |
 
-Скопируйте папку `simple_secretary_bot/` на компьютер или VPS.
+---
 
-### 2. Создание виртуального окружения
+## Быстрый старт
 
-**Windows:**
 ```bash
+# 1. Клонировать
+git clone https://github.com/silvegeno/telegram-bot-zinaida.git
+cd telegram-bot-zinaida
+
+# 2. Виртуальное окружение
 python -m venv venv
-venv\Scripts\activate
-```
+venv\Scripts\activate       # Windows
+# source venv/bin/activate  # Linux
 
-**Linux/macOS:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-### 3. Установка зависимостей
-
-```bash
+# 3. Зависимости
 pip install -r requirements.txt
-```
 
-### 4. Создание Telegram-бота через BotFather
+# 4. Настроить .env (создать из .env.example)
+cp .env.example .env
 
-1. Откройте [BotFather](https://t.me/BotFather) в Telegram
-2. Отправьте команду `/newbot`
-3. Придумайте имя бота (например: «Ироничная секретарша»)
-4. Придумайте username бота (должен заканчиваться на `bot`)
-5. **Сохраните полученный токен** — он понадобится для `.env`
-
-Узнать свой Telegram ID можно через бота [@userinfobot](https://t.me/userinfobot).
-
-### 5. Настройка `.env`
-
-Создайте файл `.env` на основе `.env.example`:
-
-```env
-TELEGRAM_BOT_TOKEN=123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11
-TELEGRAM_OWNER_ID=795375565
-VSELLM_API_KEY=your_api_key
-VSELLM_MODEL=anthropic/claude-fable-5
-VSELLM_BASE_URL=https://api.vsellm.ru/v1
-```
-
-- `TELEGRAM_BOT_TOKEN` — токен, полученный от BotFather
-- `TELEGRAM_OWNER_ID` — ваш Telegram ID
-- `VSELLM_API_KEY` — ключ API VseLLM для AI-комментариев (опционально; если не указан, используются встроенные фразы)
-
-### 6. Запуск
-
-```bash
+# 5. Запустить
 python bot.py
 ```
 
-Бот запустится и будет работать пока открыт терминал. На VPS используйте `screen` или `systemd` для фонового запуска.
+### Переменные окружения (`.env`)
+
+| Переменная | Обязательно | Описание |
+|---|---|---|
+| `TELEGRAM_BOT_TOKEN` | ✅ | Токен от [@BotFather](https://t.me/BotFather) |
+| `TELEGRAM_OWNER_ID` | ✅ | Ваш Telegram ID (через [@userinfobot](https://t.me/userinfobot)) |
+| `VSELLM_API_KEY` | ❌ | Ключ API [VseLLM](https://vsellm.ru) для AI-комментариев |
+| `VSELLM_MODEL` | ❌ | Модель (по умолчанию `anthropic/claude-fable-5`) |
+| `TZ_OFFSET` | ❌ | Смещение часового пояса от UTC (по умолчанию `3` = Москва) |
+
+---
 
 ## Команды
 
-| Команда | Описание |
-|---------|----------|
-| `/start` | Запуск бота, приветствие |
+| Команда | Действие |
+|---|---|
+| `/start` | Приветствие от Зинаиды |
 | `/menu` | Главное меню |
-| `/add` | Добавить разовую задачу |
+| `/add` | Добавить задачу (число + время через точку `10.00`) |
 | `/add_regular` | Добавить регулярное задание |
-| `/tasks` | Список активных задач |
-| `/regular` | Список регулярных заданий |
-| `/profile` | Профиль, очки, уровень |
+| `/tasks` | Список задач + кнопки ✅ Выполнить / ❌ Отменить |
+| `/regular` | Регулярные задания + ✅ Выполнено |
+| `/profile` | Очки, выполнено задач, уровень |
 | `/help` | Справка |
+
+---
 
 ## Геймификация
 
-- За выполнение разовой задачи: **10 очков**
-- За выполнение ежедневного задания: **5 очков**
-- За выполнение еженедельного: **8 очков**
-- За выполнение с интервалом: **10 очков**
+<div align="center">
 
-Уровни:
-- Уровень 1: 0–49 очков
-- Уровень 2: 50–99 очков
-- Уровень 3: 100–199 очков
-- Уровень 4: 200+ очков
+| Уровень | Очки | Награда за задачу |
+|---|---|---|
+| 1 | 0–49 | Разовая: **10**, Ежедневная: **5** |
+| 2 | 50–99 | Еженедельная: **8** |
+| 3 | 100–199 | Интервальная: **10** |
+| 4 | 200+ | 💎 Элита |
 
-## Формат CSV-файлов
+</div>
 
-### tasks.csv
-```
-id,title,deadline,status,created_at,completed_at,reward,reminder_sent
-```
+---
 
-### recurring_tasks.csv
-```
-id,title,period_type,period_value,last_completed,status,reward
-```
+## Деплой
 
-### profile.csv
-```
-telegram_id,name,points,completed_tasks
+### Railway (бесплатный тир)
+Просто подключите репозиторий — бот запустится автоматически. Порт 8080 уже настроен.
+
+### VPS (screen)
+```bash
+screen -S zinaida
+python bot.py
+# Ctrl+A D — отключиться
 ```
 
-Все файлы создаются автоматически при первом запуске.
+### VPS (systemd)
+[Пример unit-файла](deploy/zinaida.service) в папке `deploy/`.
 
-## Структура проекта
+---
+
+## Структура
 
 ```
-today/
-├── bot.py              # Главный файл бота
-├── config.py           # Конфигурация (токены, пути)
-├── csv_storage.py      # Работа с CSV-хранилищем
-├── keyboards.py        # Клавиатуры (reply + inline)
-├── scheduler.py        # Планировщик напоминаний (APScheduler)
-├── phrases.py          # Встроенные ироничные фразы
-├── ai_comments.py      # AI-генерация комментариев (VseLLM)
-├── requirements.txt    # Зависимости Python
-├── .env.example        # Пример файла .env
-└── README.md           # Этот файл
+├── bot.py              # Главный файл — aiogram 3, FSM, хендлеры
+├── config.py           # .env, токены, TZ
+├── csv_storage.py      # CRUD для трёх CSV-файлов
+├── keyboards.py        # Reply + inline клавиатуры
+├── scheduler.py        # APScheduler: напоминания + ежедневная сводка
+├── phrases.py          # 7 категорий fallback-фраз
+├── ai_comments.py      # AI через VseLLM API
+├── index.html          # Публичная страница проекта
+├── brandbook.html      # Брендбук: логотип, цвета, голос
+├── logo.png            # Логотип Зинаиды
+├── requirements.txt    # 4 зависимости
+└── .env.example        # Шаблон переменных окружения
 ```
+
+## Лицензия
+
+MIT — делайте что хотите, Зинаида не против.
